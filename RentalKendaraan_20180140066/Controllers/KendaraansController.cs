@@ -26,9 +26,10 @@ namespace RentalKendaraan_20180140066.Controllers
             ktsdList.AddRange(ktsdQuery.Distinct());
             ViewBag.ktsd = new SelectList(ktsdList);
             var menu = from m in _context.Kendaraan.Include(k => k.IdJenisKendaraanNavigation) select m;
-            if (!string.IsNullOrEmpty(ktsd))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                menu = menu.Where(x => x.Ketersediaan == ktsd);
+                menu = menu.Where(s => s.NoPolisi.Contains(searchString) || s.NamaKendaraan.Contains(searchString)
+                || s.NoStnk.Contains(searchString));
             }
 
             return View(await menu.ToListAsync());

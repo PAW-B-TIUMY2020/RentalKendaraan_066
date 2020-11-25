@@ -158,7 +158,7 @@ namespace RentalKendaraan_20180140066.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Peminjaman>(entity =>
+            modelBuilder.Entity<Peminjaman>((Action<Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Peminjaman>>)((Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Peminjaman> entity) =>
             {
                 entity.HasKey(e => e.IdPeminjaman);
 
@@ -176,7 +176,7 @@ namespace RentalKendaraan_20180140066.Models
                     .HasColumnName("Tgl_Peminjaman")
                     .HasColumnType("datetime");
 
-                entity.HasOne(d => d.IdCustomerNavigation)
+                entity.HasOne((System.Linq.Expressions.Expression<Func<Peminjaman, Customer>>)(d => (Customer)d.IdCustomerNavigation))
                     .WithMany(p => p.Peminjaman)
                     .HasForeignKey(d => d.IdCustomer)
                     .HasConstraintName("FK_Peminjaman_Customer");
@@ -190,7 +190,7 @@ namespace RentalKendaraan_20180140066.Models
                     .WithMany(p => p.Peminjaman)
                     .HasForeignKey(d => d.IdKendaraan)
                     .HasConstraintName("FK_Peminjaman_Kendaraan");
-            });
+            }));
         }
     }
 }

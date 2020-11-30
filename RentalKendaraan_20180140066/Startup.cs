@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace RentalKendaraan_20180140066
 {
@@ -35,7 +37,9 @@ namespace RentalKendaraan_20180140066
             services.AddDbContext<Models.rentkendaraanContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-
+            services.AddSingleton<IFileProvider>(
+             new PhysicalFileProvider(
+                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
